@@ -6,7 +6,7 @@
 class Restclient
 {
 
-	private $HTTP_ERROR_CODES=array(
+    private $HTTP_ERROR_CODES=array(
 	// [Informational 1xx]
 	100=>"Continue",
 	101=>"Switching Protocols",
@@ -56,58 +56,40 @@ class Restclient
 	502=>"Bad Gateway",
 	503=>"Service Unavailable",
 	504=>"Gateway Timeout",
-	505=>"HTTP Version Not Supported");
+	505=>"HTTP Version Not Supported"
+    );
 
-	const GET='get';
-	const POST='post';
-	const PUT='put';
+    const GET='get';
+    const GET_REST='getREST';
+    const POST='post';
+    const PUT='put';
     const PATCH='patch';
     const DELETE='delete';
-	const GET_REST='getREST';
-	const POST_REST='postREST';
-	const PUT_REST='putREST';
-    const PATCH_REST='patchREST';
-    const DELETE_REST='deleteREST';
 
-	public function getMethodGet(){
-		return self::GET;
-	}
+    public function getMethodGet(){
+	return self::GET;
+    }
 
-	public function getMethodPost(){
-		return self::POST;
-	}
+    public function getMethodPost(){
+	return self::POST;
+    }
 
-	public function getMethodPUT(){
-		return self::PUT;
-	}
+    public function getMethodPUT(){
+	return self::PUT;
+    }
 
     public function getMethodPatch(){
-		return self::PATCH;
-	}
+	return self::PATCH;
+    }
 
     public function getMethodDelete(){
-		return self::DELETE;
-	}
+	return self::DELETE;
+    }
 
-	public function getMethodGetRest(){
-		return self::GET_REST;
-	}
-
-	public function getMethodPostRest(){
-		return self::POST_REST;
-	}
-
-	public function getMethodPutRest(){
-		return self::PUT_REST;
-	}
-
-    public function getMethodPatchRest(){
-		return self::PATCH_REST;
-	}
-
-    public function getMethodDeleteRest(){
-		return self::DELETE_REST;
-	}
+    public function getMethodGetRest(){
+	return self::GET_REST;
+    }
+	
     /**
      * Instance de Codeigniter
      * @var object
@@ -115,8 +97,7 @@ class Restclient
     private $CI;
 
     /**
-     * Configuration
-     * @var array
+     * Configuration Array
      */
     private $config = array(
         'port'          => NULL,
@@ -130,96 +111,82 @@ class Restclient
         'result_assoc'  => TRUE,
         'cache'         => FALSE,
         'tts'           => 3600,
-		'verbose'		=> FALSE,
-		'custom_cer'	=> ''
+	'verbose'	=> FALSE,
+	'custom_cer'	=> ''
     );
 
-	private $verboseInfo='';
+    private $verboseInfo='';
 
     /**
-     * Information sur la requ�te
-     * @var array
+     * Information Array
      */
     private $info = array();
 
     /**
-     * Code de retour
-     * @var integer
+     * Errno integer
      */
     private $errno;
 
     /**
-     * Erreurs
-     * @var string
+     * Error String
      */
     private $error;
 
     /**
-     * Valeur de l'envoi
-     * @var array
+     * Output Value Array
      */
     private $output_value = array();
 
     /**
-     * En-t�te de l'envoi
-     * @var array
+     * Output Header Array
      */
     private $output_header = array();
 
     /**
-     * Valeur du retour
-     * @var string
+     * Input Value String
      */
     private $input_value;
 
     /**
-     * En-t�te du retour
-     * @var string
+     * Input Header String
      */
     private $input_header;
 
     /**
-     * Code du retour
-     * @var integer|NULL
+     * Http Code Integer|NULL
      */
     private $http_code;
 
     /**
-     * type de contenu retour
-     * @var string|NULL
+     * Conent Type String|NULL
      */
     private $content_type;
 
     /**
-     * Constructeur
-     * @param array $config
+     * Constructor with Configuration Array
      */
     public function __construct(array $config = array(), $endPoint='')
     {
 
-		$this->logger=Logger::getLogger('REST_CLIENT');
+	$this->logger=Logger::getLogger('REST_CLIENT');
 
-        // Initialise la configuration, si elle existe
+        // Initialize the configuration, if exists
         if (substr($endPoint, 0, 7) === 'http://' ||
             substr($endPoint, 0, 8) === 'https://'){
             $this->endPoint=$endPoint;
         }else{
-            //TODO Su Azure gestire 'endpoint con la varibile d'ambiente
+            //Endpoint error
         }
 
-
         $this->initialize($config);
-        // Charge l'instance de CodeIgniter
-        //$this->CI = &get_instance();
     }
 
     /**
-     * Configuration
-     * @param array $config
+     * Initialize with Configuration Array
      */
     public function initialize(array $config = array())
     {
-        // Si il y a pas de fichier de configuration
+        // If there is no configuration file
         if (empty($config)) {
             return;
         }
@@ -228,7 +195,7 @@ class Restclient
     }
 
     /**
-     * Requ�te GET
+     * GET Method
      * @param type $url
      * @param array $data
      * @param array $options
@@ -236,11 +203,11 @@ class Restclient
      */
     public function get($url, $data = array(), $options = array())
     {
-		$this->logger->debug($url);
+	$this->logger->debug($url);
 
         $this->config['header']['codiceChiamata'] = $this->getGUID();
-		$data = json_decode(json_encode($data->getDatatoSend()), true);
-		$url = $this->endPoint."$url?".http_build_query($data);
+	$data = json_decode(json_encode($data->getDatatoSend()), true);
+	$url = $this->endPoint."$url?".http_build_query($data);
         return $this->_query('get', $url, $data, $options);
     }
 
@@ -253,12 +220,11 @@ class Restclient
      */
     public function getREST($url, $data = array(), $options = array())
     {
-		$this->logger->debug($url);
+	$this->logger->debug($url);
 
         $this->config['header']['codiceChiamata'] = $this->getGUID();
-		$url = $this->endPoint."$url/".rawurlencode(implode('/', $data->getDatatoSend()));
-		$outData = $this->_query('get', $url, $data, $options);
-        return $outData;
+	$url = $this->endPoint."$url/".rawurlencode(implode('/', $data->getDatatoSend()));
+	return $this->_query('get', $url, $data, $options);
     }
 
 
@@ -271,40 +237,20 @@ class Restclient
      */
     public function post($url, $data = array(), $options = array())
     {
-		$this->logger->info($url);
+	$this->logger->info($url);
 
         $this->config['header']['codiceChiamata'] = $this->getGUID();
-		$data = json_encode($data->getDatatoSend());
-
-		return $this->_query('post', $this->endPoint.$url, $data, $options);
+	$data = json_encode($data->getDatatoSend());
+	return $this->_query('post', $this->endPoint.$url, $data, $options);
     }
 
 
     public function postFormData($url, $data = array(), $options = array())
     {
-		$this->logger->info($url);
+	$this->logger->info($url);
 
         $this->config['header']['codiceChiamata'] = $this->getGUID();
-		return $this->_query('post', $this->endPoint.$url, $data->getDatatoSend(), $options);
-    }
-
-    public function postREST($url, $data = array(), $options = array())
-    {
-		$this->logger->debug("---------------------------------------------------------------");
-        $this->logger->debug($url);
-
-		$this->config['header']['codiceChiamata'] = $this->getGUID();
-        //		var_dump($this->config);
-        //		var_dump($data);
-        $this->logger->info('Codice Chiamata: '.$this->config['header']['codiceChiamata']);
-        //		var_dump($this->config);
-        //		var_dump($data);
-        $this->logger->info($data->getDataToSend());
-		$data = json_encode($data->getDatatoSend());
-        //		var_dump($data);
-        //		var_dump($options);
-        //$this->logger->info(print_r($data));
-        return $this->_query('post', $this->endPoint.$url, $data, $options);
+	return $this->_query('post', $this->endPoint.$url, $data->getDatatoSend(), $options);
     }
 
     /**
@@ -316,11 +262,11 @@ class Restclient
      */
     public function put($url, $data = array(), $options = array())
     {
-		$this->logger->debug($url);
+	$this->logger->debug($url);
 
         $this->config['header']['codiceChiamata'] = $this->getGUID();
-	    $data = json_encode($data->getDatatoSend());
-		return $this->_query('put', $this->endPoint.$url, $data, $options);
+	$data = json_encode($data->getDatatoSend());
+	return $this->_query('put', $this->endPoint.$url, $data, $options);
     }
 
 	public function putRest($url, $data = array(), $options = array())
@@ -748,35 +694,36 @@ class Restclient
         return strlen($data);
     }
 
-	public function getGUID($trim = true)
+    public function getGUID($trim = true)
+    {
+	$retVal;
+	if (function_exists('com_create_guid'))
 	{
-		$retVal;
-		if (function_exists('com_create_guid'))
-		{
-			$retVal = com_create_guid();
-		}
-		else
-		{
-			mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
-			$charid = strtoupper(md5(uniqid(rand(), true)));
-			$hyphen = chr(45);// "-"
-			$uuid = chr(123)// "{"
-				.substr($charid, 0, 8).$hyphen
-				.substr($charid, 8, 4).$hyphen
-				.substr($charid,12, 4).$hyphen
-				.substr($charid,16, 4).$hyphen
-				.substr($charid,20,12)
-				.chr(125);// "}"
-			$retVal = $uuid;
-		}
-		if ($trim === true)
-			$retVal = trim($retVal, '{}');
-		return $retVal;
+		$retVal = com_create_guid();
 	}
+	else
+	{
+		mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+		$charid = strtoupper(md5(uniqid(rand(), true)));
+		$hyphen = chr(45);// "-"
+		$uuid = chr(123)// "{"
+			.substr($charid, 0, 8).$hyphen
+			.substr($charid, 8, 4).$hyphen
+			.substr($charid,12, 4).$hyphen
+			.substr($charid,16, 4).$hyphen
+			.substr($charid,20,12)
+			.chr(125);// "}"
+		$retVal = $uuid;
+	}
+	if ($trim === true)
+		$retVal = trim($retVal, '{}');
+	    
+	return $retVal;
+    }
 
-	public function getVerboseInfo(){
-		return $this->verboseInfo;
-	}
+    public function getVerboseInfo(){
+	return $this->verboseInfo;
+    }
 }
 
 ?>
