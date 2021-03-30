@@ -119,52 +119,52 @@ class Restclient
 
     /**
      * Information Array
-     */
+    */
     private $info = array();
 
     /**
      * Errno integer
-     */
+    */
     private $errno;
 
     /**
      * Error String
-     */
+    */
     private $error;
 
     /**
      * Output Value Array
-     */
+    */
     private $output_value = array();
 
     /**
      * Output Header Array
-     */
+    */
     private $output_header = array();
 
     /**
      * Input Value String
-     */
+    */
     private $input_value;
 
     /**
      * Input Header String
-     */
+    */
     private $input_header;
 
     /**
      * Http Code Integer|NULL
-     */
+    */
     private $http_code;
 
     /**
      * Conent Type String|NULL
-     */
+    */
     private $content_type;
 
     /**
      * Constructor with Configuration Array
-     */
+    */
     public function __construct(array $config = array(), $endPoint='')
     {
 
@@ -183,7 +183,7 @@ class Restclient
 
     /**
      * Initialize with Configuration Array
-     */
+    */
     public function initialize(array $config = array())
     {
         // If there is no configuration file
@@ -195,7 +195,7 @@ class Restclient
     }
 
     /**
-     * GET Method
+     * GET Method JSON Encode
      * @param type $url
      * @param array $data
      * @param array $options
@@ -211,8 +211,8 @@ class Restclient
         return $this->_query('get', $url, $data, $options);
     }
 
-	/**
-     * Requ�te GET
+     /**
+     * GET Method Raw Url Encode
      * @param type $url
      * @param array $data
      * @param array $options
@@ -229,7 +229,7 @@ class Restclient
 
 
     /**
-     * Requ�te POST
+     * POST Method
      * @param type $url
      * @param array $data
      * @param array $options
@@ -254,7 +254,7 @@ class Restclient
     }
 
     /**
-     * Requ�te PUT
+     * PUT Method
      * @param type $url
      * @param array $data
      * @param array $options
@@ -269,86 +269,50 @@ class Restclient
 	return $this->_query('put', $this->endPoint.$url, $data, $options);
     }
 
-	public function putRest($url, $data = array(), $options = array())
-    {
-		$this->logger->debug($url);
-
-		$this->config['header']['codiceChiamata'] = $this->getGUID();
-		$data = json_encode($data);
-        return $this->_query('put', $this->endPoint.$url, $data, $options);
-    }
-
     /**
-     * Requ�te PATCH
+     * PATCH Method
      * @param type $url
      * @param array $data
      * @param array $options
      * @return string|boolean
      */
-    /*public function patch($url, $data = array(), $options = array())
-    {
-        return $this->_query('patch', $url, $data, $options);
-    }*/
-
     public function patch($url, $data = array(), $options = array())
     {
         $this->logger->debug($url);
 
         $this->config['header']['codiceChiamata'] = $this->getGUID();
-	    $data = json_encode($data->getDatatoSend());
+	$data = json_encode($data->getDatatoSend());
         return $this->_query('patch', $this->endPoint.$url, $data, $options);
     }
 
-    public function patchRest($url, $data = array(), $options = array())
-    {
-        $this->logger->debug($url);
-
-        $this->config['header']['codiceChiamata'] = $this->getGUID();
-	    $data = json_encode($data->getDatatoSend());
-        return $this->_query('patch', $this->endPoint.$url, $data, $options);
-    }
     /**
-     * Requ�te DELETE
+     * DELETE Method
      * @param type $url
      * @param array $data
      * @param array $options
      * @return string|boolean
      */
-    /*public function delete($url, $data = array(), $options = array())
-    {
-        return $this->_query('delete', $url, $data, $options);
-    }*/
-
     public function delete($url, $data = array(), $options = array())
     {
         $this->logger->debug($url);
 
         $this->config['header']['codiceChiamata'] = $this->getGUID();
-	    $data = json_encode($data->getDatatoSend());
-        return $this->_query('delete', $this->endPoint.$url, $data, $options);
-    }
-
-    public function deleteRest($url, $data = array(), $options = array())
-    {
-        $this->logger->debug($url);
-
-        $this->config['header']['codiceChiamata'] = $this->getGUID();
-	    $data = json_encode($data->getDatatoSend());
+	$data = json_encode($data->getDatatoSend());
         return $this->_query('delete', $this->endPoint.$url, $data, $options);
     }
 
     /**
-     * R�cup�re les cookies
+     * Recover cookies
      * @return array
-     */
+    */
     public function get_cookie()
     {
         $cookies = array();
 
-        // Recherche dans les en-t�tes les cookies
+        // Search in the headers for cookies
         preg_match_all('/Set-Cookie: (.*?);/is', $this->input_header, $data, PREG_PATTERN_ORDER);
 
-        // Si il y a des cookies
+        // If there are cookies
         if (isset($data[1])) {
             foreach ($data[1] as $i => $cookie) {
                 if (!empty($cookie)) {
@@ -362,7 +326,7 @@ class Restclient
     }
 
     /**
-     * Les derni�res informations de la requ�te
+     * The last information of the request
      * @return array
      */
     public function info()
@@ -371,7 +335,7 @@ class Restclient
     }
 
     /**
-     * Le dernier code de retour http
+     * The last http return code
      * @return interger|NULL
      */
     public function http_code()
@@ -389,7 +353,7 @@ class Restclient
 
     /**
      * Mode debug
-     * @param  boolean $return retournera l'information plut�t que de l'afficher
+     * @param  boolean $return will return the information rather than display it
      * @return string le code HTML
      */
     public function debug($return = FALSE)
@@ -425,7 +389,7 @@ class Restclient
         $input .= "</pre>".PHP_EOL;
         $input .= "=============================================<br/>".PHP_EOL;
 
-        // Si il y a des erreurs
+        // If there are any errors
         if (!empty($this->error)) {
             $input .= "<h3>Errors</h3>".PHP_EOL;
             $input .= "<strong>Code:</strong> ".$this->errno."<br/>".PHP_EOL;
@@ -433,7 +397,7 @@ class Restclient
             $input .= "=============================================<br/>".PHP_EOL;
         }
 
-        // Type de sortie
+        // Output type
         if ($return) {
             return $input;
         } else {
@@ -442,7 +406,7 @@ class Restclient
     }
 
     /**
-     * Envoi la requ�te
+     * Send the request
      * @param string $method
      * @param string $url
      * @param array $data
@@ -451,15 +415,10 @@ class Restclient
      */
     private function _query($method, $url, $data = array(), array $options = array())
     {
-
-		$this->logger->info($url);
-		$this->logger->debug(print_r($data, true));
-
-
-		// Initialise la configuration, si elle existe
+	// Initializes the configuration, if it exists
         $this->initialize($options);
 
-        // Initialisation
+        // Initialization
         $this->output_header = array();
         $this->output_value = array();
         $this->input_header = '';
@@ -467,49 +426,48 @@ class Restclient
         $this->http_code = NULL;
         $this->content_type = NULL;
 
-        // Si le cache est activ�
+        // If the cache is enabled
         if ($this->config['cache']) {
-            // Parse l'URL
+            // Parse URL
             $url_indo = parse_url($url);
 
-            // D�finition de l'api
+            // Api Definition
             $api = 'rest'.str_replace('/', '_', $url_indo['path']);
 
-            // D�finition de la cl�
+            // Cache Definition
             $cache_key = (isset($url_indo['query'])) ? "{$api}_".md5($url_indo['query']) : "{$api}";
 
-            // Si la m�thode est de type GET
+            // If the method is of type GET
             if ($method == 'get') {
-                // Si il existe une cl�
+                // If exists a key
                 if ($result = $this->CI->cache->get($cache_key)) {
                     return $result;
                 }
 
-                // Si la m�thode n'est pas de type GET
+                // If the method is not of type GET
             } else {
-                // Si l'arbre de cl�s existe
+                // If the key tree exists
                 if ($keys = $this->CI->cache->get($api)) {
                     if (is_array($keys)) {
-                        // Parcours les cl�s pour les supprimer
+                        // Browse the keys to delete them
                         foreach ($keys as $key) {
                             $this->CI->cache->delete($key);
                         }
                     }
 
-                    // Supprime l'arbre de cl�s
+                    // Delete the key tree
                     $this->CI->cache->delete($api);
                 }
             }
         }
 
-        // Cr�ation d'une nouvelle ressource cURL
+        // Creation of a new resource cURL
         $curl = curl_init($url);
 
-
-        // Configuration de l'URL et d'autres options
+        // URL configuration and other options
         curl_setopt($curl, CURLOPT_URL, $url);
 
-        // Si le port est sp�cifi�
+        // If the port is specified
         if (!empty($this->config['port'])) {
             curl_setopt($curl, CURLOPT_PORT, $this->config['port']);
         }
@@ -517,34 +475,34 @@ class Restclient
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->config['timeout']);
         //curl_setopt($curl, CURLOPT_FAILONERROR, TRUE);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($curl, CURLOPT_FILETIME, TRUE);
+	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+	curl_setopt($curl, CURLOPT_FILETIME, TRUE);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, strtoupper($method));
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, TRUE);
         curl_setopt($curl, CURLOPT_HEADER, FALSE);
         curl_setopt($curl, CURLOPT_HEADERFUNCTION, array($this, '_headers'));
         curl_setopt($curl, CURLOPT_COOKIESESSION, TRUE);
-		/*
-		curl_setopt($curl, CURLOPT_PROXY, '192.168.100.1:8080');
-		curl_setopt($curl, CURLOPT_PROXYUSERPWD, 'dominio\user:password');
-		curl_setopt($curl, CURLOPT_PROXYPORT, 8080);
-		curl_setopt($curl, CURLOPT_PROXYAUTH, CURLAUTH_NTLM);
-		*/
+	/*
+	curl_setopt($curl, CURLOPT_PROXY, '192.168.100.1:8080');
+	curl_setopt($curl, CURLOPT_PROXYUSERPWD, 'dominio\user:password');
+	curl_setopt($curl, CURLOPT_PROXYPORT, 8080);
+	curl_setopt($curl, CURLOPT_PROXYAUTH, CURLAUTH_NTLM);
+	*/
 
-		if($this->config['custom_cer']!=''){
-			curl_setopt($curl, CURLOPT_CAINFO, $this->config['custom_cer']);
-			curl_setopt($curl, CURLOPT_FILETIME, TRUE);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		}
+	if($this->config['custom_cer']!=''){
+		curl_setopt($curl, CURLOPT_CAINFO, $this->config['custom_cer']);
+		curl_setopt($curl, CURLOPT_FILETIME, TRUE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+	}
 
-		if($this->config['verbose']) {
-			curl_setopt($curl, CURLOPT_VERBOSE, TRUE);
-			curl_setopt($curl, CURLOPT_STDERR, $verbose = fopen('php://temp', 'rw+'));
-		}
+	if($this->config['verbose']) {
+		curl_setopt($curl, CURLOPT_VERBOSE, TRUE);
+		curl_setopt($curl, CURLOPT_STDERR, $verbose = fopen('php://temp', 'rw+'));
+	}
 
-        // Si il y a une authentification
+        // If there is authentication
         if ($this->config['auth']) {
             switch ($this->config['auth_type']) {
                 // Authentification http basic
@@ -553,25 +511,25 @@ class Restclient
                     curl_setopt($curl, CURLOPT_USERPWD, "{$this->config['auth_username']}:{$this->config['auth_password']}");
                     break;
                 case 'bearer':
-                    //echo 'preparo la richiesta con il bearer token: '.$this->config['bearer_token'];
+                    //echo 'Prepare the request with bearer token: '.$this->config['bearer_token'];
                     // curl_setopt($curl, CURLOPT_HTTPHEADER,  "Authorization: Bearer ".$this->config['bearer_token']);
                     $this->config['header']['Authorization']='Bearer '.$this->config['bearer_token'];
                     break;
             }
         }
 
-        // Si il y a des headers
+        // If there are headers
         if (!empty($this->config['header']) && is_array($this->config['header'])) {
-            // Ajoute les en-t�tes
+            // Add headers
             foreach ($this->config['header'] as $key => $value) {
                 $this->output_header[] = "$key: $value";
             }
         }
 
-        // R�f�rence du data
+        // Data reference
         $this->output_value =& $data;
 
-        // Encodage des datas
+        // Data encoding
         switch ($method) {
             case 'post':
             case 'patch':
@@ -591,10 +549,10 @@ class Restclient
             default:
         }
 
-        // D�finition des headers d'envoi
+        // Definition of send headers
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->output_header);
 
-        // Si y il a un cookie
+        // If there is a cookie
         if (!empty($this->config['cookie']) && is_array($this->config['cookie'])) {
             $cookies = array();
 
@@ -605,82 +563,81 @@ class Restclient
             curl_setopt($curl, CURLOPT_COOKIE, implode(";", $cookies));
         }
 
-        // R�cup�ration de l'URL et affichage sur le naviguateur
+        // URL retrieval and display on the browser
         $response = curl_exec($curl);
 
-		if($this->config['verbose']) {
-			!rewind($verbose);
-			$this->verboseInfo="Verbose information:\n".stream_get_contents($verbose)."\n";
-			//echo "Verbose information:\n", !rewind($verbose), stream_get_contents($verbose), "\n";
-		}
+	if($this->config['verbose']) {
+		!rewind($verbose);
+		$this->verboseInfo="Verbose information:\n".stream_get_contents($verbose)."\n";
+	}
 
-        // R�cup�ration du code http
+        // Http code recovery
         $this->http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        // R�cup�ration du type de contenu
+        // Content type retrieval
         $this->content_type = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
 
-        // Information sur la requete
+        // Request information
         $this->info = curl_getinfo($curl);
 
-		$this->logger->info('HTTP_CODE: '.curl_getinfo($curl, CURLINFO_HTTP_CODE).' TOTAL_TIME: '.curl_getinfo($curl, CURLINFO_TOTAL_TIME));
-		$this->logger->debug('NAMELOOKUP_TIME: '.curl_getinfo($curl, CURLINFO_NAMELOOKUP_TIME).' CONNECT_TIME: '.curl_getinfo($curl, CURLINFO_CONNECT_TIME));
-		$this->logger->debug('SSL_VERIFYRESULT: '.curl_getinfo($curl, CURLINFO_SSL_VERIFYRESULT));
+	//$this->logger->info('HTTP_CODE: '.curl_getinfo($curl, CURLINFO_HTTP_CODE).' TOTAL_TIME: '.curl_getinfo($curl, CURLINFO_TOTAL_TIME));
+	//$this->logger->debug('NAMELOOKUP_TIME: '.curl_getinfo($curl, CURLINFO_NAMELOOKUP_TIME).' CONNECT_TIME: '.curl_getinfo($curl, CURLINFO_CONNECT_TIME));
+	//$this->logger->debug('SSL_VERIFYRESULT: '.curl_getinfo($curl, CURLINFO_SSL_VERIFYRESULT));
 
-        // Gestion des erreurs
+        // Error management
         if ($response === FALSE) {
             $this->errno = curl_errno($curl);
             $this->error = curl_error($curl);
             return FALSE;
         }
 
-        // Fermeture de la session cURL
+        // Closing the cURL session
         curl_close($curl);
 
-        // Si le contenu est du json
+        // If the content is json
         if (strstr($this->content_type, 'json')) {
             $result = json_decode($response, $this->config['result_assoc']);
-        // Si autre format
+        // If other format
         } else {
             $result = $response;
         }
 
-        // R�f�rence de la r�ponse
+        // Response reference
         $this->input_value = & $response;
 
-        // Si le cahche est activ� et que la m�thode est de type GET
+        // SIf the cache is enabled and the method is GET
         if ($this->config['cache'] && $method == 'get') {
-            // Si la cl� existe dans le noeud
+            // If the key exists in the node
             if (!$keys = $this->CI->cache->get($api) OR ! isset($keys[$cache_key])) {
-                // R�cup�re les cl�s existantes
+                // Recover existing keys
                 $keys = (is_array($keys)) ? $keys : array();
 
-                // Enregistre la cl�
+                // Save the key
                 $keys[$cache_key] = $cache_key;
 
-                // Sauvegarde les cl�s
+                // Save the keys
                 $this->CI->cache->save($api, $keys, $this->config['tts']);
             }
 
-            // Sauvegarde les donn�es
+            // Back up data
             $this->CI->cache->save($cache_key, $result, $this->config['tts']);
         }
 
-		if($this->http_code!=200){
-			$result=new StdClass();
-			$result->CodEsito=$this->http_code;
-			$result->DescEsito=$this->HTTP_ERROR_CODES[$this->http_code];
-			$result->TraceGuid=$this->config['header']['codiceChiamata'];
-			$result->ErrorsDetail=array();
-			$result->Payload=array();
-		}
+	if($this->http_code!=200){
+		$result=new StdClass();
+		$result->CodEsito=$this->http_code;
+		$result->DescEsito=$this->HTTP_ERROR_CODES[$this->http_code];
+		$result->TraceGuid=$this->config['header']['codiceChiamata'];
+		$result->ErrorsDetail=array();
+		$result->Payload=array();
+	}
 
-        // Retourne les r�sultats
+        // Returns the results
         return $result;
     }
 
     /**
-     * R�cup�re les en-t�tes
+     * Get headers
      * @param resource $curl
      * @param string $data
      * @return integer
