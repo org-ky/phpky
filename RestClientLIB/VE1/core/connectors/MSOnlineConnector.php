@@ -4,7 +4,7 @@ class MSOnlineConnector extends VE1_Connector implements VE1_IRestConnector{
 
 	public function __construct($endPoint){
 
-		//TODO i dati dinaminci devono essere presi da varibili di ambiente Azure
+		//TODO i dati dinaminci devono essere presi da variabili di ambiente
 		$config = array(
 			'port'          => NULL,
 			'cookie'        => FALSE,
