@@ -81,7 +81,7 @@ class MSOnlineConnector extends VE1_Connector implements VE1_IRestConnector{
 					$r->CodEsito=0;
 					$r->DescEsito=$result->Messaggio;
 				}else{
-					// Daje Peppe Inserire una loggata...
+					// Inserire una loggata...
 				}
 			}else if(isset($result->Message)){
 				$r->CodEsito=2;
