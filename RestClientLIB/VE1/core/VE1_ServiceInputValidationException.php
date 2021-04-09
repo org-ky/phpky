@@ -1,6 +1,6 @@
 <?php
 
-class VE3_ServiceInputValidationException extends Exception
+class VE1_ServiceInputValidationException extends Exception
 {
 	
 	public function __construct($message, $code=500, $previous=null) {
