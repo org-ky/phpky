@@ -1,7 +1,7 @@
 <?php
 
 //TODO extends Interface
-interface VE3_IBeanIn
+interface VE1_IBeanIn
 {
 	public function getDataToSend();
 }
