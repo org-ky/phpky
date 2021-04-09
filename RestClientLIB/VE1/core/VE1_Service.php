@@ -78,43 +78,31 @@ class VE1_Service
 			case RestClient::PUT:
 				$result = $this->connector->doPut($this->url, $data);
 				break;
-      case RestClient::PATCH:
+      			case RestClient::PATCH:
 				$result = $this->connector->doPatch($this->url, $data);
 				break;
-      case RestClient::DELETE:
+      			case RestClient::DELETE:
 				$result = $this->connector->doDelete($this->url, $data);
 				break;
 			case RestClient::GET_REST:
 				$result = $this->connector->doGetRest($this->url, $data);
 				break;
-			/*case RestClient::POST_REST:
-				$result = $this->connector->doPostRest($this->url, $data);
-				break;
-			  case RestClient::PUT_REST:
-				$result = $this->connector->doPutRest($this->url, $data);
-				break;
-        case RestClient::PATCH_REST:
-				$result = $this->connector->doPatchRest($this->url, $data);
-				break;
-            case RestClient::DELETE_REST:
-				$result = $this->connector->doDeleteRest($this->url, $data);
-				break;*/
 		}
 
 		if(!isset($result->Payload)){
-            $result->Payload = new stdClass();
-        }
+            		$result->Payload = new stdClass();
+        	}
 
 		return $result;
 
 	}
 
-  protected function cleanDate($date){
+	protected function cleanDate($date){
 
-        $date = str_replace('T', ' ', $date);
-        $newDate = DateTime::createFromFormat('Y-m-d h:i:s:u' , $date);
-        return $newDate->format('Y-m-d h:i:s');
-  }
+		$date = str_replace('T', ' ', $date);
+		$newDate = DateTime::createFromFormat('Y-m-d h:i:s:u' , $date);
+		return $newDate->format('Y-m-d h:i:s');
+	}
 
 }
 ?>
