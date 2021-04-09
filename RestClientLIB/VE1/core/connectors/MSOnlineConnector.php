@@ -40,12 +40,12 @@ class MSOnlineConnector extends VE1_Connector implements VE1_IRestConnector{
 		return $this->wrapResult($result);
 	}
 
-  public function doPatch($url, $data){
+  	public function doPatch($url, $data){
 		$result = parent::patch($url, $data);
 		return $this->wrapResult($result);
 	}
 
-  public function doDelete($url, $data){
+  	public function doDelete($url, $data){
 		$result = parent::delete($url, $data);
 		return $this->wrapResult($result);
 	}
