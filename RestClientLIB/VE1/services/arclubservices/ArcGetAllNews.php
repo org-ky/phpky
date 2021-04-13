@@ -5,7 +5,7 @@ class ArcGetAllNews extends VE3_Service implements VE3_IService
 
     public function validate($input){
 
-		//TODO verificare i parametri di input qui...
+	//TODO verificare i parametri di input qui...
     	return $this->runValidation();
 
     }
@@ -15,10 +15,11 @@ class ArcGetAllNews extends VE3_Service implements VE3_IService
      	$serviceResult=$this->dispatch($input);
     	$out=$serviceResult;
 
-      //Data elaboration if necessary
-      /*$data=$out->Payload;
-      $newData=array();
-      foreach ($data as $value){
+        //Data elaboration if necessary
+        /*
+	$data=$out->Payload;
+        $newData=array();
+        foreach ($data as $value){
             $obj=new stdClass();
             $obj->id = isset($value->ID) ? $value->ID : '';
             $obj->titolo = isset($value->titolo) ? $value->titolo : '';
@@ -32,11 +33,13 @@ class ArcGetAllNews extends VE3_Service implements VE3_IService
             $obj->timestamp = isset($value->timestamp) ? $value->timestamp : '';
             $obj->id_user = isset($value->id_user) ? $value->id_user : '';
             array_push($newData, $obj);
-      }
+        }
 
-      usort($newData, "ArcGetAllNews::cmp");
+	//Order data before return them
+        usort($newData, "ArcGetAllNews::cmp");
 
-      $out->Payload=$newData;*/
+        $out->Payload=$newData;
+	*/
 
     	return $out;
 
