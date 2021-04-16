@@ -9,6 +9,8 @@ class CCServicesFactory{
 
         $logger->debug('Servizio invocato: '.$params[3]);
         switch($params[3]){
+            /*Caso di servizio con due parametri obbligatori in input(NumeroElementiPagina, Offset) e il resto dei parametri facoltativi in input
+              inseriti nell'array associativo "CustomData" */
             case "getallnews":
 
                 $factory=ArcServicesFactory::getInstance();
@@ -39,6 +41,7 @@ class CCServicesFactory{
                 $service->setFields($output->getFields());
                 break;
             
+            /*Caso di servizio con nessun parametro in input*/
             case "getalllinks":
 
                 $factory=ArcServicesFactory::getInstance();
@@ -51,6 +54,7 @@ class CCServicesFactory{
                 $service->setFields($output->getFields());
                 break;
                 
+            /*Caso di servizio con almeno un parametro obbligatorio in input inserito nell'array associativo "CustomData" */
             case "getlinkbyidkey":
 
                 $factory=ArcServicesFactory::getInstance();
