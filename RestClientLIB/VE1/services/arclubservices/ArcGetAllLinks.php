@@ -1,6 +1,6 @@
 <?php
 
-class ArcGetAllLinks extends VE3_Service implements VE3_IService
+class ArcGetAllLinks extends VE1_Service implements VE1_IService
 {
 
     public function validate($input){
