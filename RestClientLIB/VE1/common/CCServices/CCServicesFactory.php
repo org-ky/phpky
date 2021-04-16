@@ -67,6 +67,38 @@ class CCServicesFactory{
                 $output=new ArcGetLinkByIdKeyBeanOut();
                 $service->setFields($output->getFields());
                 break;
+                
+            /*Caso di servizio con tutti i parametri obbligatori in input*/
+            case "insertlink":
+
+                $factory=ArcServicesFactory::getInstance();
+
+                $parameters=new StdClass();
+                $parameters->serviceName='insertlink';
+                $parameters->input=new ArcInsertLinkBeanIn();
+                $parameters->input->setChiave($params[4]);
+                $parameters->input->setValore($params[5]);
+                $parameters->input->setTipo($params[6]);
+                $parameters->input->setStato($params[7]);
+
+                $output=new ArcInsertLinkBeanOut();
+                $service->setFields($output->getFields());
+                break;
+
+            /*Caso di servizio con obbligatorio in input il parameto "Id" ed almeno uno dei parametri definiti nell'array associativo "CustomData" */
+            case "updatelink":
+
+                $factory=ArcServicesFactory::getInstance();
+
+                $parameters=new StdClass();
+                $parameters->serviceName='updatelink';
+                $parameters->input=new ArcUpdateLinkBeanIn();
+                $parameters->input->setId($params[4]);
+                $parameters->input->setCustomData($params[5]);
+
+                $output=new ArcUpdateLinkBeanOut();
+                $service->setFields($output->getFields());
+                break;
         }
 
         $serviceResult = VE3_BusinessProcessManager::execute($factory, $parameters, $service);
