@@ -1,6 +1,6 @@
 <?php
 
-class ArcInsertLinkBeanOut implements VE3_IBeanOut
+class ArcInsertLinkBeanOut implements VE1_IBeanOut
 {
 
     function __construct()
@@ -8,9 +8,11 @@ class ArcInsertLinkBeanOut implements VE3_IBeanOut
 
     }
 
-	  function getFields(){
-		  return array();
-	  }
+    function getFields()
+    {
+	  return array();
+    }
 
 }
+
 ?>
