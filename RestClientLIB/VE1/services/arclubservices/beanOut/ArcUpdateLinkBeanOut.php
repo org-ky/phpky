@@ -8,9 +8,11 @@ class ArcUpdateLinkBeanOut implements VE1_IBeanOut
 
     }
 
-	  function getFields(){
-		    return array();
-	  }
+    function getFields()
+    {
+	   return array();
+    }
 
 }
+
 ?>
