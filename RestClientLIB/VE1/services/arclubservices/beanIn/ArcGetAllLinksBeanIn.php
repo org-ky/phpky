@@ -1,6 +1,6 @@
 <?php
 
-class ArcGetAllLinksBeanIn implements VE3_IBeanIn
+class ArcGetAllLinksBeanIn implements VE1_IBeanIn
 {
 
     function __construct()
@@ -11,10 +11,10 @@ class ArcGetAllLinksBeanIn implements VE3_IBeanIn
 
     function getDataToSend()
     {
-		  $data=new StdClass();
+	  $data=new StdClass();
 
-		  return $data;
-	  }
+	  return $data;
+    }
 
 }
 
