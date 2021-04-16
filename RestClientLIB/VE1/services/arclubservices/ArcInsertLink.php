@@ -1,6 +1,6 @@
 <?php
 
-class ArcInsertLink extends VE3_Service implements VE3_IService
+class ArcInsertLink extends VE1_Service implements VE1_IService
 {
 
     function __construct($connector, $url, $method)
@@ -16,7 +16,7 @@ class ArcInsertLink extends VE3_Service implements VE3_IService
 
     public function execute($input)
     {
-        //TODO gestire l'eccezione
+          //TODO gestire l'eccezione
     	  $serviceResult=$this->dispatch($input);
     	  $out=$serviceResult;
 
