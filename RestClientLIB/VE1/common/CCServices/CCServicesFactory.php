@@ -50,6 +50,19 @@ class CCServicesFactory{
                 $output=new ArcGetAllLinksBeanOut();
                 $service->setFields($output->getFields());
                 break;
+                
+            case "getlinkbyidkey":
+
+                $factory=ArcServicesFactory::getInstance();
+
+                $parameters=new StdClass();
+                $parameters->serviceName='getlinkbyidkey';
+                $parameters->input=new ArcGetLinkByIdKeyBeanIn();
+                $parameters->input->setCustomData($params[4]);
+
+                $output=new ArcGetLinkByIdKeyBeanOut();
+                $service->setFields($output->getFields());
+                break;
         }
 
         $serviceResult = VE3_BusinessProcessManager::execute($factory, $parameters, $service);
