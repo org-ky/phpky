@@ -1,6 +1,6 @@
 <?php
 
-class ArcGetLinkByIdKeyBeanIn implements VE3_IBeanIn
+class ArcGetLinkByIdKeyBeanIn implements VE1_IBeanIn
 {
 
     function __construct()
@@ -8,32 +8,32 @@ class ArcGetLinkByIdKeyBeanIn implements VE3_IBeanIn
         $this->customData = array();
     }
 
-	  function setCustomData($customData)
+    function setCustomData($customData)
     {
-		    $this->customData = $customData;
-	  }
+	$this->customData = $customData;
+    }
 
-	  function getCustomData()
+    function getCustomData()
     {
-		    return $this->customData;
-	  }
+	return $this->customData;
+    }
 
     function getDataToSend()
     {
-		    $data=new StdClass();
+	$data=new StdClass();
 
-		    foreach ($this->customData as $key => $value)
+	foreach ($this->customData as $key => $value)
         {
-			    switch ($key){
-				    case 'id':
-				    case 'chiave':
-					    $data->$key=$value;
-					  break;
-			    }
-		    }
+		switch ($key){
+		    case 'id':
+		    case 'chiave':
+			    $data->$key=$value;
+		            break;
+		}
+	}
 
-		    return $data;
-	  } 
+	return $data;
+    } 
 
 }
 ?>
