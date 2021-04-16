@@ -1,9 +1,9 @@
 <?php
 
-class ArcInsertLinkBeanIn implements VE3_IBeanIn
+class ArcInsertLinkBeanIn implements VE1_IBeanIn
 {
 
-	  private $chiave;
+    private $chiave;
     private $valore;
     private $tipo;
     private $stato;
@@ -13,57 +13,57 @@ class ArcInsertLinkBeanIn implements VE3_IBeanIn
 
     }
 
-	  function setChiave($chiave)
+    function setChiave($chiave)
     {
-		    $this->chiave=$chiave;
-	  }
+	  $this->chiave=$chiave;
+    }
 
-	  function getChiave()
+    function getChiave()
     {
-		    return $this->chiave;
-	  }
+	  return $this->chiave;
+    }
 
     function setValore($valore)
-    {
-		    $this->valore=$valore;
-	  }
+    {    	
+	  $this->valore=$valore;
+    }
 
-	  function getValore()
+    function getValore()
     {
-		    return $this->valore;
-	  }
+          return $this->valore;
+    }
 
     function setTipo($tipo)
     {
-		    $this->tipo=$tipo;
-	  }
+          $this->tipo=$tipo;
+    }
 
-	  function getTipo()
+    function getTipo()
     {
-	  	  return $this->tipo;
-	  }
+  	  return $this->tipo;
+    }
 
     function setStato($stato)
     {
-		    $this->stato=$stato;
-	  }
+	  $this->stato=$stato;
+    }
 
-	  function getStato()
+    function getStato()
     {
-		    return $this->stato;
-	  }
+	  return $this->stato;
+    }
 
     function getDataToSend()
     {
-		    $data=new StdClass();
+	$data=new StdClass();
 
-		    $data->chiave=$this->chiave;
+	$data->chiave=$this->chiave;
         $data->valore=$this->valore;
         $data->tipo=$this->tipo;
         $data->stato=$this->stato;
 
-		    return $data;
-	  }
+	return $data;
+    }
 
 }
 ?>
