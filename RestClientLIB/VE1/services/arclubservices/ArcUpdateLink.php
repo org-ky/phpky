@@ -1,6 +1,6 @@
 <?php
 
-class ArcUpdateLink extends VE3_Service implements VE3_IService
+class ArcUpdateLink extends VE1_Service implements VE1_IService
 {
 
     function __construct($connector, $url, $method)
@@ -10,8 +10,8 @@ class ArcUpdateLink extends VE3_Service implements VE3_IService
 
     public function validate($input)
     {
-		    //TODO verificare i parametri di input qui...
-    	  return $this->runValidation();
+	//TODO verificare i parametri di input qui...
+    	return $this->runValidation();
     }
 
     public function execute($input)
