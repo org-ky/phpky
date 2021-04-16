@@ -1,6 +1,6 @@
 <?php
 
-class ArcGetAllNews extends VE3_Service implements VE3_IService
+class ArcGetAllNews extends VE1_Service implements VE1_IService
 {
 
     public function validate($input){
@@ -45,7 +45,8 @@ class ArcGetAllNews extends VE3_Service implements VE3_IService
 
     }
 
-    public static function cmp($a, $b) {
+    public static function cmp($a, $b) 
+    {
         return strcmp($b->timestamp, $a->timestamp);
     }
 
