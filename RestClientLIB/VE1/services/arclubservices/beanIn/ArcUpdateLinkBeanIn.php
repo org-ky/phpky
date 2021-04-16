@@ -1,57 +1,57 @@
 <?php
 
-class ArcUpdateLinkBeanIn implements VE3_IBeanIn
+class ArcUpdateLinkBeanIn implements VE1_IBeanIn
 {
 
-	  private $id;
+    private $id;
 
     function __construct()
     {
         $this->customData = array();
     }
 
-	  function setId($id)
+    function setId($id)
     {
-		    $this->id=$id;
-	  }
+        $this->id=$id;
+    }
 
-	  function getId()
+    function getId()
     {
-		    return $this->id;
-	  }
+	return $this->id;
+    }
 
     function setCustomData($customData)
     {
-		    $this->customData = $customData;
-	  }
+	$this->customData = $customData;
+    }
 
-	  function getCustomData()
+    function getCustomData()
     {
-		    return $this->customData;
-	  }
+        return $this->customData;
+    }
 
     function getDataToSend()
     {
-		  $data=new StdClass();
+	$data=new StdClass();
 
-		  $data->id=$this->id;
+	$data->id=$this->id;
 
-      foreach ($this->customData as $key => $value)
-      {
+        foreach ($this->customData as $key => $value)
+        {
 
-        switch ($key){
-          case 'chiave':
-          case 'valore':
-                  case 'tipo':
-                  case 'stato':
-            $data->$key=$value;
-            break;
-        }
+           switch ($key){
+          	case 'chiave':
+          	case 'valore':
+                case 'tipo':
+                case 'stato':
+            		$data->$key=$value;
+            		break;
+           }
 
-		  }
-
-		  return $data;
 	}
+
+	return $data;
+    }
 
 }
 ?>
