@@ -5,5 +5,5 @@ A seconda della famiglia di servizi Rest a cui connettersi vengono definiti:
  - Service Factory
  - Common Factory
 
-Il componente che esegue il servizio richiamato è il "VE1_BusinessProcessManager" che viene
-invocato dalla Common Factory.
+Il componente che esegue il servizio richiamato è il "VE1_BusinessProcessManager", contenuto nella
+cartella "core", che viene invocato dalla Common Factory.
