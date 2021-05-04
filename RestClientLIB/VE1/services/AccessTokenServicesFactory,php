@@ -1,0 +1,29 @@
+<?php
+// Load all services class
+require_once (APPPATH . 'services/accesstoken/MSOnlineGetAccessToken.php');
+require_once (APPPATH . 'services/accesstoken/beanIn/MSOnlineGetAccessTokenBeanIn.php');
+require_once (APPPATH . 'services/accesstoken/beanOut/MSOnlineGetAccessTokenBeanOut.php');
+
+class AccessTokenServicesFactory extends VE3_Singleton
+{
+
+	public static function create($serviceName)
+	{
+		//Recupera l'endpoint dalla configurazione
+    $endPoint = 'https://login.microsoftonline.com';
+
+		$connector= MSOnlineConnector::getInstance($endPoint);
+		$service=null;
+
+		switch($serviceName){
+
+        case 'msonline_getaccesstoken':
+				  $service = new MSOnlineGetAccessToken($connector, '/consulcesi.onmicrosoft.com/oauth2/token', $connector->getMethodPost());
+				  break;
+
+		}
+
+		return $service;
+	}
+}
+?>
