@@ -5,7 +5,7 @@ class CCServicesFactory{
         //TODO handle the error when service called not exists
         $logger=Logger::getLogger('ccservices');
 
-        $service = new Service($params[3], Service::VE3_version);
+        $service = new Service($params[3], Service::VE1_version);
 
         $logger->debug('Servizio invocato: '.$params[3]);
         switch($params[3]){
