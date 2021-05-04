@@ -1,6 +1,6 @@
 <?php
 
-class VE3_Singleton
+class VE1_Singleton
 {
     /**
      * Returns the *Singleton* instance of this class.
