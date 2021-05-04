@@ -1,0 +1,66 @@
+<?php
+
+// Load all services class
+require_once (APPPATH . 'services/arclubservices/ArcGetAllNews.php');
+require_once (APPPATH . 'services/arclubservices/beanIn/ArcGetAllNewsBeanIn.php');
+require_once (APPPATH . 'services/arclubservices/beanOut/ArcGetAllNewsBeanOut.php');
+require_once (APPPATH . 'services/arclubservices/ArcGetAllLinks.php');
+require_once (APPPATH . 'services/arclubservices/beanIn/ArcGetAllLinksBeanIn.php');
+require_once (APPPATH . 'services/arclubservices/beanOut/ArcGetAllLinksBeanOut.php');
+require_once (APPPATH . 'services/arclubservices/ArcGetLinkByIdKey.php');
+require_once (APPPATH . 'services/arclubservices/beanIn/ArcGetLinkByIdKeyBeanIn.php');
+require_once (APPPATH . 'services/arclubservices/beanOut/ArcGetLinkByIdKeyBeanOut.php');
+require_once (APPPATH . 'services/arclubservices/ArcInsertLink.php');
+require_once (APPPATH . 'services/arclubservices/beanIn/ArcInsertLinkBeanIn.php');
+require_once (APPPATH . 'services/arclubservices/beanOut/ArcInsertLinkBeanOut.php');
+require_once (APPPATH . 'services/arclubservices/ArcUpdateLink.php');
+require_once (APPPATH . 'services/arclubservices/beanIn/ArcUpdateLinkBeanIn.php');
+require_once (APPPATH . 'services/arclubservices/beanOut/ArcUpdateLinkBeanOut.php');
+
+
+class ArcServicesFactory extends VE3_Singleton
+{
+
+	public static function create($serviceName)
+	{
+      //TODO get from Environment Variables
+      $endPoint='https://ccsarcit.dev.consulcesi.com/BusinessDelegate.svc/arc/';
+
+      $connector = CCSConnector::getInstance($endPoint);
+		  $service=null;
+
+		  switch($serviceName)
+      {
+        case 'getalllinks':
+				  $service = new ArcGetAllLinks($connector, "sg/GetAllLinks/POST", $connector->getMethodPostRest());
+				  break;
+
+        case 'getlinkbyidkey':
+				  $service = new ArcGetLinkByIdKey($connector, "sg/GetLinkByIdKey/POST", $connector->getMethodPostRest());
+				  break;
+
+        case 'insertlink':
+				  $service = new ArcInsertLink($connector, "sg/InsertLink/POST", $connector->getMethodPostRest());
+				  break;
+
+        case 'updatelink':
+				  $service = new ArcUpdateLink($connector, "sg/UpdateLink/POST", $connector->getMethodPostRest());
+				  break;
+
+			  case 'getallnews':
+				  $service = new ArcGetAllNews($connector, "al/GetAllNews/POST", $connector->getMethodPostRest());
+				  break;
+
+			  case 'getnew':
+				  $service = new ArcGetNew($connector, "al/GetNew/POST", $connector->getMethodPostRest());
+				  break;
+
+        case 'addnews':
+				  $service = new ArcAddNews($connector, "al/AddNews/POST", $connector->getMethodPostRest());
+				  break;
+		}
+
+		return $service;
+	}
+}
+?>
