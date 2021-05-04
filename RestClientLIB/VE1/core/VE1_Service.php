@@ -12,8 +12,8 @@ class VE1_Service
 		$this->method=$method;
 	}
 
-	public function addValidator($validator, $required, $value, $parameterName){
-
+	public function addValidator($validator, $required, $value, $parameterName)
+	{
 		$obj=new stdClass();
 		$obj->validator=$validator;
 		$obj->required=$required;
@@ -24,8 +24,8 @@ class VE1_Service
 
 	}
 
-	public function runValidation(){
-
+	public function runValidation()
+	{
 		$logger=Logger::getLogger('SERVICE');
 
 		$result=null;
@@ -60,8 +60,8 @@ class VE1_Service
 
 	}
 
-	protected function dispatch($data){
-
+	protected function dispatch($data)
+	{
 		$logger=Logger::getLogger('SERVICE');
 		$logger->info('PARAMETERS: '.print_r($data, true));
 
@@ -97,8 +97,8 @@ class VE1_Service
 
 	}
 
-	protected function cleanDate($date){
-
+	protected function cleanDate($date)
+	{
 		$date = str_replace('T', ' ', $date);
 		$newDate = DateTime::createFromFormat('Y-m-d h:i:s:u' , $date);
 		return $newDate->format('Y-m-d h:i:s');
